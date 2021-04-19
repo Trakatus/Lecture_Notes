@@ -1,0 +1,395 @@
+\documentclass[a4paper,11pt]{amsart}
+\usepackage[scale=0.75,twoside,bindingoffset=5mm]{geometry}
+\usepackage[onehalfspacing]{setspace}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath, amssymb, amsthm, enumitem, latexsym, mathrsfs, tikz-cd, xcolor, hyperref,bm}
+\usepackage{tikz}
+\usepackage{fullpage}
+
+\title{Differntial Geometry}
+\author{Trakatus}
+
+\usepackage[numbers]{natbib}
+\usepackage{graphicx}
+\usepackage{gensymb}
+\usepackage{yhmath}
+\usepackage{mathdots}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{siunitx}
+\usepackage{color}
+
+\usetikzlibrary{fadings}
+\usetikzlibrary{patterns}
+\usetikzlibrary{shadows.blur}
+\usetikzlibrary{shapes}
+%Mecro
+	%TheoremMecro
+		\theoremstyle{plain}
+		\newtheorem{thm}{Theorem}[section]
+		\newtheorem{cor}[thm]{Corollary}
+		\newtheorem{lem}[thm]{Lemma}
+		\newtheorem{claim}[thm]{Claim}
+		\newtheorem{prop}[thm]{Proposition}
+		\newtheorem{ques}{Question}
+		\newtheorem{conj}[thm]{Conjecture}
+		\theoremstyle{definition}
+		\newtheorem{defn}[thm]{Definition}
+		\newtheorem{exml}[thm]{Example}
+		\newtheorem{notn}[thm]{Notation}
+		\newtheorem{exer}[thm]{Exercise}
+		\newtheorem{rmk}[thm]{Remark}
+	%CommandMecro
+		%Arrow mecro
+			\newcommand{\injarr}{\rightarrowtail}
+			\newcommand{\surjarr}{\twoheadrightarrow}
+			\newcommand{\bijarr}{\rightarrowtail \hspace{-9pt} \twoheadrightarrow}
+		%Category mecro
+			\newcommand{\cat}[1]{\mathscr{#1}}
+			\newcommand{\dual}{^{\ast}}
+			\newcommand{\obj}{\mathrm{obj}}
+			\newcommand{\op}{^{\mathrm{op}}}
+			\newcommand{\mor}[3]{\hom_{\cat{#1}}(#2,#3)}
+			\newcommand{\Set}{\mathbf{Set}}
+		%Complex part mecro
+			\renewcommand\Re{\mathrm{Re}}
+			\renewcommand\Im{\mathrm{Im}}
+		%Derivative macro
+			\newcommand{\derivative}[2]{\frac{d#1}{d#2}}
+			\newcommand{\pderivative}[2]{\frac{\partial #1}{\partial #2}}
+			\newcommand{\varderivative}[1]{\frac{d}{d#1}}
+			\newcommand{\varpderivative}[1]{\frac{\partial}{\partial #1}}
+		%Blackboard bold macro
+			\newcommand{\Aff}{\mathbb{A}}
+			\newcommand{\affn}{\mathbb{A}^n}
+			\newcommand{\CC}{\mathbb{C}}
+			\newcommand{\Cm}{\mathbb{C}^{m}}
+			\newcommand{\Cn}{\mathbb{C}^{n}}
+			\newcommand{\Eucsp}[2]{\mathbb{#1}^{#2}}
+			\newcommand{\NN}{\mathbb{N}}
+			\newcommand{\pcs}[1]{\mathbb{CP}^{#1}}
+			\newcommand{\pcsn}{\mathbb{CP}^{n}}
+			\newcommand{\prs}[1]{\mathbb{RP}^{#1}}
+			\newcommand{\prsn}{\mathbb{RP}^{n}}
+			\newcommand{\QQ}{\mathbb{Q}}
+			\newcommand{\RR}{\mathbb{R}}
+			\newcommand{\Rm}{\mathbb{R}^{m}}
+			\newcommand{\Rn}{\mathbb{R}^{n}}
+			\newcommand{\ZZ}{\mathbb{Z}}
+		%Index set mecro
+			\newcommand{\indexset}[2]{#1\in\mathcal{#2}}
+		%Limit mecro
+			\newcommand{\limit}[1]{\lim_{#1}}
+			\newcommand{\goinf}{\rightarrow\infty}
+	%Darkmode
+		%\renewcommand\qedsymbol{$\blacksquare$}
+		%\newcommand{\setbackgroundcolour}{\pagecolor[rgb]{0.107,0.111,0.137}}
+		%\newcommand{\settextcolour}{\color[rgb]{0.77,0.77,0.77}}
+		%\newcommand{\invertbackgroundtext}{\setbackgroundcolour\settextcolour}
+		%\invertbackgroundtext
+	%Hyperlink Setting
+		\hypersetup{
+			colorlinks=true,
+			linkcolor=white,
+			filecolor=magenta,
+			urlcolor=cyan,
+	}	 
+\begin{document}
+\maketitle
+\nocite{o2006elementary,do2016differential,thorpe2012elementary,helgason2001differential,tu2017differential}
+\section{Introduction}
+	The main goal of elemental differential geometry is just knowledge of curves and surfaces. Those are based on calculus and linear algebra, those can show local properties of our objects. The other aspect, global properties: entire shapes. So finally viewpoints of manifold, futher Riemannian.
+
+\section{Elemental Topics on Curves}
+	\begin{defn}[Parametrized Curves]
+		Consider an open interval $I=(a,b)$ of real line. Then a differentiable map $\bm{\alpha}:I\rightarrow\RR^3$ is a parametrized \emph{differentiable curve} into $\RR^3$.
+	\end{defn}
+		So we can define such map $\bm{\alpha}$ as: $\bm{\alpha}(t)=(x_1(t),x_2(t),x_3(t))$. Meaning of differentiable of $\bm{\alpha}$ is just three induced maps $x_i$'s are differentiable. And the variable $t\in I$ called \emph{parameter} of the curve. (The meaning of interval $I$ can be also when $a,b$ are not just finite. e.g. $I=\RR$.)
+
+		We denote by $x'(t)$ for first derivative of $x$ at $t$, in this sence, define a derivative of curve;
+	\begin{defn}[Tangent Vector]
+		For a differentiable map $\bm{\alpha}:I\rightarrow\RR^n$, there exists first derivatives of each $x_i$. Then $\bm{\alpha}'(t):=(x_1'(t),x_2'(t),x_3'(t))\in\RR^3$ is aclled the \emph{tangent vector} (or \emph{velocity vector}) of curve $\bm{\alpha}$.
+	\end{defn}
+		The meaning of vector in geometry, not just element of vector space $\RR^3$, as an arrow from initial point to some other point; thus it can be a good tool for local properties of geometrical objects.
+	\begin{defn}[Regular Curves]
+		A parametrized curve $\bm{\alpha}:I\rightarrow\RR^3$ is \emph{regular} if its tangent vector $\bm{\alpha}'(t)$ is never zero for all $t\in I$.
+	\end{defn}
+		From now on we shall consider only regular parametrized differentiable curves. A usual induced mesure is \emph{arc length}.
+	\begin{defn}[Arc Length]
+		An \emph{arc length} of curve $\bm{\alpha}:[a,b]\rightarrow\RR^3$ to be
+			\[
+				L:=\int^{b}_{a}\Vert \alpha'(u)\Vert du=\int^{b}_{a}\sqrt{x_1'^2+x_2'^2+x_3'^2} du.
+			\]
+		We can consider length as map: For each $t\in[a,b]$,
+			\[
+				s(t):=\int^{t}_{a}\Vert \alpha'(u)\Vert du
+			\]
+		is called \emph{arc length function} of curve $\bm{\alpha}$. So for arc length $L$, a map $s:[a,b]\rightarrow[0,L]$, we can use $s$ as parameter of curve.
+	\end{defn}
+		But we need to show that formula makes sense.
+
+		Let $P$ be an partition of $I=[a,b]$. i.e. $P=\{t_0=a<t_1<\cdots<t_n=b\}$. Then an approximation of curve: that is union of line segments through to points in $P$, denote $L(P)$. Then
+			\[
+				L(P)=\sum^{n}_{i=1}|\alpha(t_i)-\alpha(t_{i-1})|
+			\]
+		We can measure the length of $|P|:=\max|t_i-t_{i-1}|$. We using limit on $|P|\rightarrow 0$. For every $\varepsilon>0$, there exists $\delta>0$ s.t. $|P|<\delta\implies |L(P)-L|<\varepsilon$. We can prove it by mean value theorem.
+
+		Arc length can be also one of parameter of curve. An \emph{arc length parametrization} $\beta(s):=\alpha(t(s))$. Where $t(s)$ mean an inverse of $s$, i.e. $\beta=\alpha\circ s^{-1}$.
+
+		And we know that $\frac{ds}{dt}=\Vert\alpha'(t)\Vert$, So
+			\[
+				\Vert\beta'(s)\Vert=\Vert\alpha'(t(s))t'(s)\Vert=\Vert\alpha'(t)\Vert\left\Vert\frac{dt}{ds}\right\Vert=\left\Vert\frac{ds}{dt}\frac{dt}{ds}\right\Vert=1
+			\]
+		So this parametrization is also called an \emph{unit velocity} parameterization. So by $\beta(s)$, arc length $s$ is
+			\[
+				s=\int^{s}_{0}\Vert\beta'(u)\Vert du=\int^s_a 1 du=s.
+			\]
+	\begin{defn}[Unit Tangent Vector]
+		Let $\alpha(s)$ is an parametrized regular curve parametrized by arc length. Then its tangent vector ${T}(s):=\alpha'(s)$ is called \emph{unit tangent vector}. Because, if $\alpha$ parametrized by arc length, then naturally its length, or also say norm, is 1. i.e. $\Vert{T}(s)\Vert=1$. Also this property implies following formula:
+			\[
+				{T}(s)\cdot{T'}(s)=0
+			\]
+		i.e. the unit tangent vector is orthogonal to its derivative.
+	\end{defn}
+
+		Hence, we know for arbitrary parameter $t$, regualar curve $\alpha(t)$, and its arc length parametrization $\beta(s)$,
+			\[
+				T(s(t))=\beta'(s(t))=\frac{\alpha'(t)}{\Vert\alpha'(t)\Vert}
+			\]
+		Since $\Vert\alpha'(t)\Vert=s'(t)$, and $\alpha'(t)=(\beta\circ s)'(t)=\beta'(s(t))\circ s'(t)$.
+
+
+	\begin{defn}[Curvature]
+		A length of $T'(s)$ is called \emph{curvature} of $\alpha$ at $s$, denoted by $\kappa(s)$, where $T$ is a unit tangent vector of $\alpha$.
+	\end{defn}
+
+		From now on, to get smoothness of curvature, we assume $\kappa(s)>0$ for all $s$. i.e. $T'(s)\neq 0$.
+
+	\begin{defn}[Normal Vector]
+		If $\kappa>0$, let $N(s):=\frac{T'(s)}{|T'(s)|}=T'(s)/\kappa(s)$. i.e. normalized vector of derivative of unit tangent, called \emph{normal vector} to $\alpha$ at $s$.
+	\end{defn}
+
+		Since $T\cdot T'=0$, tangent vector and normal vector are perpinticular. So their cross product is also unit vector and form a basis for $\RR^3$.
+
+	\begin{defn}[Binormal Vector]
+		A \emph{binormal vector} to $\alpha$ at $s$ is $B(s)$ as
+			\[
+				B(s):=T(s)\times N(s)
+			\]
+	\end{defn}
+
+	\begin{defn}[Torsion]
+		Consider a derivative of $B$.
+			\[
+		 		B=T\times N\implies B'=T'\times N+T\times N'.
+			\]
+		But $T'=\kappa N$, $B'=T\times N'$. Hence $B'= x T+yN+z B$, since $\{T,N,B\}$ forms a basis, but by normality of $B$, $z=0$, and $B'=T\times N'$, $x=0$. So we can denote as
+			\[
+				B'(s)=-\tau(s) N(s)
+			\]
+		here function $\tau:[0,L]\rightarrow\RR$ is called \emph{torsion}.
+	\end{defn}
+
+
+		So we know that $T'$ and $B'$ are pararell to $N$. But $N'$ have to orthogonal to $N$, by normality. Then we can denote $N'$ as
+			\[
+				N'(s)=\chi_1(s)T(s)+\chi_2(s)B(s)
+			\]
+		But we have $T\cdot N= B\cdot N=0$, and those implies
+			\[
+				T'\cdot N+T\cdot N'=\kappa+T\cdot N'=\kappa+\chi_1=0.
+			\]
+			\[
+				B'\cdot N+B\cdot N'=-\tau+B\cdot N'=-\tau+\chi_2=0.
+			\]
+		Therefore we get \emph{Frenet-Serret Formula}.
+			\[
+				\begin{bmatrix}
+					T'\\N'\\B'
+				\end{bmatrix}=\begin{bmatrix}
+					0&\kappa&0\\-\kappa&0&\tau\\0&-\tau&0
+				\end{bmatrix}\begin{bmatrix}
+					T\\N\\B
+				\end{bmatrix}
+			\]
+
+		Without proof, note that torsion is zero iff that curve is in a plane, and curvature is zero iff that curve is a piece of a line. Moreover, curvature and torsion are characterize the space curve.
+
+		\begin{thm}[Fundamental Theorem of Local Theory of Curves]
+			Given differentiable curvature $\kappa$ (positive curvature), torsion $\tau$, and interval $I$, there exists a regular curve $\alpha:I\rightarrow \RR^3$ which satisfying given conditions. Moreover, those regular curve is unique differ from rigid motions.
+		\end{thm}
+
+		This theorem can easily prove it as ODE. $\mathcal{F}$
+
+% Pattern Info
+	\tikzset{
+	pattern size/.store in=\mcSize, 
+	pattern size = 5pt,
+	pattern thickness/.store in=\mcThickness, 
+	pattern thickness = 0.3pt,
+	pattern radius/.store in=\mcRadius, 
+	pattern radius = 1pt}
+	\makeatletter
+	\pgfutil@ifundefined{pgf@pattern@name@_f3agbrax5}{
+	\pgfdeclarepatternformonly[\mcThickness,\mcSize]{_f3agbrax5}
+	{\pgfqpoint{0pt}{0pt}}
+	{\pgfpoint{\mcSize+\mcThickness}{\mcSize+\mcThickness}}
+	{\pgfpoint{\mcSize}{\mcSize}}
+	{
+	\pgfsetcolor{\tikz@pattern@color}
+	\pgfsetlinewidth{\mcThickness}
+	\pgfpathmoveto{\pgfqpoint{0pt}{0pt}}
+	\pgfpathlineto{\pgfpoint{\mcSize+\mcThickness}{\mcSize+\mcThickness}}
+	\pgfusepath{stroke}
+	}}
+	\makeatother
+
+	% Pattern Info
+	 
+	\tikzset{
+	pattern size/.store in=\mcSize, 
+	pattern size = 5pt,
+	pattern thickness/.store in=\mcThickness, 
+	pattern thickness = 0.3pt,
+	pattern radius/.store in=\mcRadius, 
+	pattern radius = 1pt}
+	\makeatletter
+	\pgfutil@ifundefined{pgf@pattern@name@_aeb8a24w4}{
+	\pgfdeclarepatternformonly[\mcThickness,\mcSize]{_aeb8a24w4}
+	{\pgfqpoint{0pt}{0pt}}
+	{\pgfpoint{\mcSize+\mcThickness}{\mcSize+\mcThickness}}
+	{\pgfpoint{\mcSize}{\mcSize}}
+	{
+	\pgfsetcolor{\tikz@pattern@color}
+	\pgfsetlinewidth{\mcThickness}
+	\pgfpathmoveto{\pgfqpoint{0pt}{0pt}}
+	\pgfpathlineto{\pgfpoint{\mcSize+\mcThickness}{\mcSize+\mcThickness}}
+	\pgfusepath{stroke}
+	}}
+	\makeatother
+
+	% Pattern Info
+	 
+	\tikzset{
+	pattern size/.store in=\mcSize, 
+	pattern size = 5pt,
+	pattern thickness/.store in=\mcThickness, 
+	pattern thickness = 0.3pt,
+	pattern radius/.store in=\mcRadius, 
+	pattern radius = 1pt}
+	\makeatletter
+	\pgfutil@ifundefined{pgf@pattern@name@_in74n07ua}{
+	\pgfdeclarepatternformonly[\mcThickness,\mcSize]{_in74n07ua}
+	{\pgfqpoint{0pt}{0pt}}
+	{\pgfpoint{\mcSize+\mcThickness}{\mcSize+\mcThickness}}
+	{\pgfpoint{\mcSize}{\mcSize}}
+	{
+	\pgfsetcolor{\tikz@pattern@color}
+	\pgfsetlinewidth{\mcThickness}
+	\pgfpathmoveto{\pgfqpoint{0pt}{0pt}}
+	\pgfpathlineto{\pgfpoint{\mcSize+\mcThickness}{\mcSize+\mcThickness}}
+	\pgfusepath{stroke}
+	}}
+	\makeatother
+	\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+	%uncomment if require: \path (0,358); %set diagram left start at 0, and has height of 358
+
+	%Shape: Polygon Curved [id:ds5131914254766328] 
+	\draw   (64.02,31.11) .. controls (73.19,9.63) and (101.05,10.19) .. (123.35,8.47) .. controls (145.65,6.74) and (183.87,55.86) .. (212.65,55.5) .. controls (241.44,55.14) and (312.05,9.05) .. (328.26,14.85) .. controls (344.47,20.66) and (333.15,90.92) .. (275.65,112.4) .. controls (218.16,133.88) and (79.92,122.85) .. (67.69,105.43) .. controls (55.45,88.01) and (54.84,52.6) .. (64.02,31.11) -- cycle ;
+	%Curve Lines [id:da44760139558839374] 
+	\draw    (79.31,80.18) .. controls (104.39,117.05) and (112.95,109.5) .. (149.04,98.47) ;
+	%Curve Lines [id:da35330470442721373] 
+	\draw    (86.65,90.19) .. controls (102.55,91.93) and (119.68,82.79) .. (134.36,103.11) ;
+	%Curve Lines [id:da09550752518241334] 
+	\draw    (237.12,81.05) .. controls (234.06,102.68) and (297.06,81.77) .. (313.88,48.97) ;
+	%Curve Lines [id:da4168516587085973] 
+	\draw    (246.29,90.34) .. controls (253.63,67.26) and (280.24,51.58) .. (304.4,61.16) ;
+
+	%Shape: Polygon Curved [id:ds42050354272833923] 
+	\draw  [dash pattern={on 4.5pt off 4.5pt}] (158.6,99) .. controls (178.6,89) and (170.2,71.8) .. (187.8,91.4) .. controls (205.4,111) and (209.6,114.8) .. (178.6,118.6) .. controls (147.6,122.4) and (138.6,109) .. (158.6,99) -- cycle ;
+	%Shape: Polygon Curved [id:ds3859584537124603] 
+	\draw  [dash pattern={on 0.84pt off 2.51pt}] (175.4,101.8) .. controls (195.4,91.8) and (175.4,68.2) .. (211.4,81.8) .. controls (247.4,95.4) and (269.4,102.2) .. (247.8,111) .. controls (226.2,119.8) and (155.4,111.8) .. (175.4,101.8) -- cycle ;
+	%Straight Lines [id:da23754479999395772] 
+	\draw    (178.6,118.6) -- (178.6,212.25) -- (178.6,251.3) ;
+	\draw [shift={(178.6,253.3)}, rotate = 270] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (8.74,-2.63) .. controls (5.56,-1.12) and (2.65,-0.24) .. (0,0) .. controls (2.65,0.24) and (5.56,1.12) .. (8.74,2.63)   ;
+	%Straight Lines [id:da32652903235946784] 
+	\draw    (247.8,111) -- (247.8,221.75) -- (247.8,251.25) ;
+	\draw [shift={(247.8,253.25)}, rotate = 270] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (8.74,-2.63) .. controls (5.56,-1.12) and (2.65,-0.24) .. (0,0) .. controls (2.65,0.24) and (5.56,1.12) .. (8.74,2.63)   ;
+	%Shape: Polygon Curved [id:ds6625081034194569] 
+	\draw   (244.76,218.63) .. controls (267.78,207.29) and (252,195.5) .. (261,191.5) .. controls (270,187.5) and (323,238.5) .. (337,251.5) .. controls (351,264.5) and (267.78,320.67) .. (244.76,286.66) .. controls (221.75,252.64) and (221.75,229.97) .. (244.76,218.63) -- cycle ;
+	%Shape: Path Data [id:dp266503064989136] 
+	\draw  [pattern=_f3agbrax5,pattern size=6pt,pattern thickness=0.75pt,pattern radius=0pt, pattern color={rgb, 255:red, 0; green, 0; blue, 0}] (267.59,259.07) .. controls (267.59,273.09) and (263.02,286.09) .. (255.23,296.8) .. controls (250.93,293.84) and (247.34,290.46) .. (244.76,286.66) .. controls (221.75,252.64) and (221.75,229.97) .. (244.76,218.63) .. controls (246.45,217.8) and (248.57,216.97) .. (251.04,216.15) .. controls (261.36,227.71) and (267.59,242.69) .. (267.59,259.07) -- cycle ;
+	%Shape: Polygon Curved [id:ds6360528839131849] 
+	\draw   (178.6,212.25) .. controls (226.7,236.25) and (204.5,260) .. (190.5,288.75) .. controls (176.5,317.5) and (54.5,294.75) .. (97.5,262.25) .. controls (140.5,229.75) and (130.5,188.25) .. (178.6,212.25) -- cycle ;
+	%Shape: Path Data [id:dp3504981693542657] 
+	\draw  [pattern=_aeb8a24w4,pattern size=6pt,pattern thickness=0.75pt,pattern radius=0pt, pattern color={rgb, 255:red, 0; green, 0; blue, 0}] (187.8,91.4) .. controls (199.12,104.01) and (204.9,110.08) .. (199.33,113.82) .. controls (179.73,111.85) and (164.79,107.1) .. (175.4,101.8) .. controls (182.11,98.44) and (184.32,93.55) .. (185.65,89.05) .. controls (186.32,89.77) and (187.04,90.55) .. (187.8,91.4) -- cycle ;
+	%Shape: Path Data [id:dp7458774175607685] 
+	\draw  [pattern=_in74n07ua,pattern size=6pt,pattern thickness=0.75pt,pattern radius=0pt, pattern color={rgb, 255:red, 0; green, 0; blue, 0}] (156.67,255.08) .. controls (156.67,237.72) and (164.49,222.12) .. (176.91,211.42) .. controls (177.47,211.69) and (178.03,211.97) .. (178.6,212.25) .. controls (226.7,236.25) and (204.5,260) .. (190.5,288.75) .. controls (188.29,293.29) and (183.38,296.55) .. (176.85,298.69) .. controls (164.46,287.99) and (156.67,272.42) .. (156.67,255.08) -- cycle ;
+	%Curve Lines [id:da5326717417168725] 
+	\draw    (186.27,222.25) .. controls (187.97,209.36) and (232.31,189.77) .. (243.19,226.45) ;
+	\draw [shift={(243.67,228.17)}, rotate = 255.62] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (8.74,-2.63) .. controls (5.56,-1.12) and (2.65,-0.24) .. (0,0) .. controls (2.65,0.24) and (5.56,1.12) .. (8.74,2.63)   ;
+	%Curve Lines [id:da4413026898797885] 
+	\draw    (174.33,285.83) .. controls (200.27,311.94) and (231.71,313.62) .. (251.44,286.75) ;
+	\draw [shift={(252.33,285.5)}, rotate = 484.92] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+
+	% Text Node
+	\draw (155.6,102.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$U$};
+	% Text Node
+	\draw (218.4,95.6) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$V$};
+	% Text Node
+	\draw (379.6,30.6) node [anchor=north west][inner sep=0.75pt]    {$U$};
+	% Text Node
+	\draw (478.6,30.6) node [anchor=north west][inner sep=0.75pt]    {$h_{U}( U) \subseteq \mathbb{R}^{n}$};
+	% Text Node
+	\draw (379.6,71.8) node [anchor=north west][inner sep=0.75pt]    {$V$};
+	% Text Node
+	\draw (481.6,71.8) node [anchor=north west][inner sep=0.75pt]    {$h_{V}( V) \subseteq \mathbb{R}^{n}$};
+	% Text Node
+	\draw (337.67,139.73) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$ \begin{array}{l}
+	g_{UV} :=h_{V} \circ h^{-1}_{U} \in C^{\infty }( h_{U}( U\cap V)) ,\\
+	g_{VU} :=h_{U} \circ h^{-1}_{V} \in C^{\infty }( h_{V}( U\cap V))
+	\end{array}$};
+	% Text Node
+	\draw (30,65.4) node [anchor=north west][inner sep=0.75pt]    {$M$};
+	% Text Node
+	\draw (26.67,253.4) node [anchor=north west][inner sep=0.75pt]    {$\mathbb{R}^{n}$};
+	% Text Node
+	\draw (48.33,178.07) node [anchor=north west][inner sep=0.75pt]    {$\mathcal{A} ,\text{Atlas}$};
+	% Text Node
+	\draw (133,325.4) node [anchor=north west][inner sep=0.75pt]    {$h_{U}( U\cap V) \leftrightharpoons h_{V}( U\cap V)$};
+	% Connection
+	\draw    (397.6,38.32) -- (473.6,39.15) ;
+	\draw [shift={(475.6,39.18)}, rotate = 180.63] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (8.74,-2.63) .. controls (5.56,-1.12) and (2.65,-0.24) .. (0,0) .. controls (2.65,0.24) and (5.56,1.12) .. (8.74,2.63)   ;
+	% Connection
+	\draw    (396.6,79.51) -- (476.6,80.37) ;
+	\draw [shift={(478.6,80.39)}, rotate = 180.62] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (8.74,-2.63) .. controls (5.56,-1.12) and (2.65,-0.24) .. (0,0) .. controls (2.65,0.24) and (5.56,1.12) .. (8.74,2.63)   ;
+	% Connection
+	\draw    (38.98,85) -- (38.69,247) ;
+	\draw [shift={(38.69,249)}, rotate = 270.1] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+\end{tikzpicture}
+\newpage
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Surfaces}
+Differential
+\begin{footnotesize}
+\bibliographystyle{abbrv}
+\bibliography{elemdiff}
+\end{footnotesize}
+\end{document}

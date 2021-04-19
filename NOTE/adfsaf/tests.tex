@@ -1,0 +1,377 @@
+\documentclass[a4paper,11pt]{amsart}
+\usepackage[scale=0.75,twoside,bindingoffset=5mm]{geometry}
+\usepackage[onehalfspacing]{setspace}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[fit]{truncate}
+\usepackage{amsmath, amssymb, amsthm, enumitem, latexsym, mathrsfs, tikz-cd, xcolor, hyperref,array}
+\title{Natural operation on Manifolds}
+\author{Trakatus}
+\usepackage[toc,page]{appendix}
+\usepackage{natbib}
+\usepackage{graphicx}
+%Mecro
+	%TheoremMecro
+		%Theoremstyles
+			\theoremstyle{definition}
+			\newtheorem{thm}{Theorem}[section]
+			\newtheorem{lem}[thm]{Lemma}
+			\newtheorem{cor}[thm]{Corollary}
+			\newtheorem{prop}[thm]{Proposition}
+		%Definitonstyles
+			\newtheorem{defn}[thm]{Definition}
+			\newtheorem{exer}{Exercise}
+			\newtheorem{exml}[thm]{Example}
+			\newtheorem{prob}{Problem}
+			\newtheorem{wrng}{Warning}
+		%Remarkstyles
+			\newtheorem*{claim}{Claim}
+			\newtheorem*{conj}{Conjecture}
+			\newtheorem*{fact}{Fact}
+			\newtheorem*{note}{Note}
+			\newtheorem*{rmk}{Remark}
+			\newtheorem*{rslt}{Result}
+			\newtheorem*{summ}{Summary}
+		%Unordered style
+			\newtheorem*{defn*}{Definition}
+			\newtheorem*{prop*}{Proposition}
+			\newtheorem*{thm*}{Theorem}
+	%CommandMecro
+		%Arrow mecro
+			\newcommand{\injarr}{\rightarrowtail}
+			\newcommand{\surjarr}{\twoheadrightarrow}
+			\newcommand{\bijarr}{\rightarrowtail \hspace{-9pt} \twoheadrightarrow}
+		%Category mecro
+			\newcommand{\cat}[1]{\mathscr{#1}}
+			\newcommand{\dual}{^{\ast}}
+			\newcommand{\obj}{\mathrm{obj}}
+			\newcommand{\op}{^{\mathrm{op}}}
+			\newcommand{\mor}[3]{\hom_{\cat{#1}}(#2,#3)}
+			\newcommand{\Set}{\mathbf{Set}}
+		%Complex part mecro
+			\renewcommand\Re{\mathrm{Re}}
+			\renewcommand\Im{\mathrm{Im}}
+		%Derivative macro
+			\newcommand{\derivative}[2]{\frac{d#1}{d#2}}
+			\newcommand{\pderivative}[2]{\frac{\partial #1}{\partial #2}}
+			\newcommand{\varderivative}[1]{\frac{d}{d#1}}
+			\newcommand{\varpderivative}[1]{\frac{\partial}{\partial #1}}
+		%Blackboard bold macro
+			\newcommand{\Aff}{\mathbb{A}}
+			\newcommand{\affn}{\mathbb{A}^n}
+			\newcommand{\CC}{\mathbb{C}}
+			\newcommand{\Cm}{\mathbb{C}^{m}}
+			\newcommand{\Cn}{\mathbb{C}^{n}}
+			\newcommand{\Eucsp}[2]{\mathbb{#1}^{#2}}
+			\newcommand{\NN}{\mathbb{N}}
+			\newcommand{\pcs}[1]{\mathbb{CP}^{#1}}
+			\newcommand{\pcsn}{\mathbb{CP}^{n}}
+			\newcommand{\prs}[1]{\mathbb{RP}^{#1}}
+			\newcommand{\prsn}{\mathbb{RP}^{n}}
+			\newcommand{\QQ}{\mathbb{Q}}
+			\newcommand{\RR}{\mathbb{R}}
+			\newcommand{\Rm}{\mathbb{R}^{m}}
+			\newcommand{\Rn}{\mathbb{R}^{n}}
+			\newcommand{\ZZ}{\mathbb{Z}}
+		%Index set mecro
+			\newcommand{\indexset}[2]{#1\in\mathcal{#2}}
+		%Limit mecro
+			\newcommand{\limit}[1]{\lim_{#1}}
+			\newcommand{\goinf}{\rightarrow\infty}
+	%Darkmode
+		%\renewcommand\qedsymbol{$\blacksquare$}
+		\newcommand{\setbackgroundcolour}{\pagecolor[rgb]{0.107,0.111,0.137}}
+		\newcommand{\settextcolour}{\color[rgb]{0.77,0.77,0.77}}
+		\newcommand{\invertbackgroundtext}{\setbackgroundcolour\settextcolour}
+		%\invertbackgroundtext
+	%Hyperlink Setting
+		\hypersetup{
+			colorlinks=true,
+			linkcolor=blue,
+			filecolor=magenta,
+			urlcolor=cyan,
+	}	 
+\begin{document}
+
+\maketitle
+\section{Basic Definition} % (fold)
+\label{sec:basic_definition}
+	First, let define a space at which our philosophy something smooth going on.
+	\begin{defn}[Manifolds, Charts, Atlas, Structure]
+		A Second countable Hausdorff space $M$ is said to be an \textbf{$n$-dimensional manifold} if it is locally homeomorphic to $\RR^n$. i.e. a \textbf{chart} $(U,h)$ given, where $U$ is an open set in $M$ and $h:U\to h(U)\subseteq\RR^n$ is homeomorphism that $h(U)$ is open set in $\RR^n$. The family of charts $\{U_\alpha,h_\alpha\}_{\alpha\in A}$ is said to be \textbf{atlas}, when $\{U_\alpha\}_{\alpha\in A}$ cover $M$.
+
+
+		We determine smoothness of manifold by smoothness of chart changing: For $U_\alpha\cap U_\beta\neq\varnothing$, $\tau_{\alpha\beta}:=h_\beta\circ h_\alpha^{-1}$ is $C^k$-class, then that atlas $\mathcal{A}\ni (U_\alpha,h_\alpha),(U_\beta,h_\beta)$ is said to be $C^k$-atlas.
+		\[
+			\tau_{\alpha\beta}:h_\alpha(U_\alpha\cap U_\beta)\to h_\beta(U_\alpha\cap U_\beta),
+			\begin{tikzcd}
+				& U_\alpha\cap U_\beta \arrow[ld, "h_\alpha"'] \arrow[rd, "h_\beta"] & \\
+				h_\alpha( U_\alpha\cap U_\beta ) \arrow[rr, "\tau_{\alpha\beta}"'] & & h_\beta(U_\alpha\cap U_\beta)
+			\end{tikzcd}
+		\]
+		We say the maximal atlas, i.e. when if union of two $C^k$-atlas is also another atlas then we equivalent those atlases; then such class is said to be $C^k$-\textbf{structure}.
+	\end{defn}
+	\begin{defn}[Manifold with Boundary]
+		
+		A Second countable Hausdorff space $M$ is said to be an \textbf{$n$-dimensional manifold with boundary} if it is locally homeomorphic to $\RR^n_{+}:=\{x\in\RR^n:x_n\geq 0\}$. This definition well works for other conepts, atlas, structure, etc. A \textbf{boundary} $\partial M$ is mapped on $\partial\RR^n_{+}=\{x\in\RR^n:x_n=0\}$.
+		
+		
+		So naturally it is locally homeomorphic to $\RR^{n-1}$. The complement of boundary is called interior, $M^{\circ}$. Let $(U_\alpha,h_\alpha)$ be a chart on $M$ Then the chart for $\partial M$ is $(U_\alpha\cap\partial M,h_{\alpha}|_{U_\alpha\cap\partial M})$ that $h_{\alpha}|_{U_\alpha\cap\partial M}$ maps ${U_\alpha\cap\partial M}$ to open subset in $\RR^{n-1}$, where we include $\RR^{n-1}\hookrightarrow\RR^n_{+}$.
+
+
+		If $\partial M=\varnothing$, then we shall say that $M$ is \textbf{closed}.
+	\end{defn}
+	\begin{exml}[Unit sphere]
+		Let $M=\mathbb{S}^n:=\{x\in\RR^{n+1}:\Vert x\Vert=1\}$. Consider $2n+2$ subsets $U_i^+:=\{x\in\mathbb{S}^{n}:x_i>0\}$ and $U_i^-:=\{x\in\mathbb{S}^{n}:x_i<0\}$. And let $h^\pm_i:U^\pm_i\to\RR^{n}$ be given by leaving out the $i$-th coordinate. This atlas defines the standard differential structure on $\mathbb{S}^n$.
+		There is another way: Consider two poles $a_\pm=(0,\cdots,0,\pm 1)\in\RR^{n+1}$.
+		
+
+		Let $U^\pm=\mathbb{S}^n\setminus\{a_\pm\}$ and consider the projection $h_\pm$ from $a_\pm$;
+		\[
+			h_\pm:(x_1,\cdots,x_{n+1})=\frac{1}{1\mp x_{n+1}}(x_1,\cdots,x_{n},0).
+		\]
+	\end{exml}
+	\begin{exml}[Real and Complex Projective space]
+		The real projective $n-$space $\mathbb{RP}^n$ is obtained by identifying antipodal points in $\mathbb{S}^n$; Let $\pi:\mathbb{S}^n\to\mathbb{RP}^n$ be such identification. Note that $\pi|_{U^+_i}$ is homeomorphism, and its image covers $\mathbb{RP}^n$.
+		\begin{figure*}[h]
+		    \centering
+			\begin{tikzcd}
+				U^+_i \arrow[r, hook] \arrow[d, "h_i^+"'] & \mathbb{S}^n \arrow[r, "\pi"] & \mathbb{RP}^n\\
+				\mathbb{R}^n \arrow[urr, "\pi\circ (h^+_i)^{-1}"'] & & 
+			\end{tikzcd}
+		\end{figure*}
+
+		Thus $\{\pi(U^+_i,h_i^+\circ\pi^{-1})\}_{i=1}^{n+1}$ is an atlas on $\mathbb{RP}^n$.
+
+
+		Another way, \textbf{the homogeneous coordinates}: Consider an equivalent relation $\sim$ on $\RR^{n+1}$:
+		\[
+			x\sim y\iff \exists\lambda\in\RR\setminus\{0\}\text{ s.t. }x=\lambda y
+		\]
+		then
+		\[
+			\mathbb{RP}^n\cong(\RR^{n+1}\setminus\{0\})/\sim.
+		\]
+		
+
+		Similarly, we suppose complex $\CC$ on here,
+		\[
+			\mathbb{CP}^n\cong(\CC^{n+1}\setminus\{0\})/\sim,\quad	x\sim y\iff \exists\lambda\in\CC\setminus\{0\}\text{ s.t. }x=\lambda y.
+		\]
+	\end{exml}
+	\begin{exml}[Grassmannian Manifold]
+		Projective manifold starts the idea that points of it are line contained origin of Euclidean. More generally, when we take points as $n$-dimensional subspace of Euclidean, this provide \textbf{Grassmannian Manifold}.
+		\[
+			\mathrm{Gr}_k(\RR^n):=\{V\subseteq\RR^n:V\text{ is a linear subspace, }\dim V=k\}
+		\]
+		It is clear that
+		\[
+			\mathrm{Gr}_1(\RR^{n+1})=\mathbb{RP}^n.
+		\]
+	\end{exml}
+	\begin{defn}[Product Manifold]
+		If $\{U_\alpha,h_\alpha\}_\alpha$ is an atlas on $M$, $\{V_\beta,g_\beta\}_\beta$ is an atlas on $N$, and at least one of $M,N$ is a closed, then $\{U_\alpha\times V_\beta,h_\alpha\times g_\beta\}_{(\alpha,\beta)}$ is an atlas on $M\times N$ and defines the product structure on it.
+		But if both $M$ and $N$ are not closed, this is not an atlas.
+	\end{defn}
+	\begin{exml}[Stiefel Manifold]
+		Consider a set of $n\times k$ matrices with real entries $\mathrm{Mat}_{n\times k}(\RR)$ that can identify $\RR^{nk}$, and a subset $V_{n,k}$ of $\mathrm{Mat}_{n\times k}(\RR)$ that matrices of full rank can identify open subset of $\RR^{nk}$.
+		An $n\times k$ matrices of rank $k$ can be viewed as $k$-frames, that is called \textbf{Stiefel manifold} of $k$-frames in $\RR^n$. Of course $V_{n,n}$ is $\mathrm{GL}(n)$. By the foregoing, $V_{n,k}$ is $nk$-dimensional differentiable manifold.
+	\end{exml}
+	Next, define a smooth maps between manifold.
+
+	\begin{defn}[Smooth map, Diffeomorphism]
+		A map $f:M\to N$ between manifolds is said to be $C^k$ if for each $x\in M$ and each chart $(V,h_V)$ of $f(x)$, there is a chart $(U,h_U)$ of $x$ that $f(U)\subseteq V$ and related map $h_V\circ f\circ h_U^{-1}:h_U(U)\to h_V(V)$ is $C^k$.
+
+
+		A $C^k$ map $f:M\to N $ is said to be $C^k-$\textbf{diffeomorphism} if it has $C^k$ inverse $f^{-1}:N\to M$.
+
+
+		A map  $f:M\to N$ between manifolds of the same dimension is called a \textbf{local diffeomorphism} if each $x\in M$ has an open neighborhood $U$ such that $f|_U:U\to f(U)$ is diffeomorphism. Note that a local diffeomorphism need not to be surjective and injective.
+	\end{defn}
+
+	Note that the relation of diffeomorphism is an equivalence relation between smooth structures.
+
+	\begin{exml}[Lie Group]
+		Consider $\mathrm{GL}(n)$. Just matrix multiplication provide smooth map $\mathrm{GL}(n)\times\mathrm{GL}(n)\to\mathrm{GL}(n)$ since each entries are polynomial of entries of domain. We say a group is a smooth manifold and the group operation a smooth map, called \textbf{Lie group}. Note that set of orthogonal matrices $\mathrm{O}(n)$ is also Lie group.
+
+
+		Note that if $L$ is a Lie group and $a\in L$, then the map $R_a:L\to L$ that $x\mapsto ax$ is diffeomorphism.
+	\end{exml}
+
+	\begin{defn}[Orientation]
+		Let $\mathcal{A}=\{u_\alpha,h_\alpha\}_\alpha$ be an atlas in $M$. Consider jacobian determinant of transition maps $\tau_{\alpha\beta}: h_\alpha(U_\alpha\cap U_\beta)\to h_\beta(U_\alpha\cap U_\beta)$. When it is positive, then such $\tau_{\alpha\beta}$ is \textbf{orientation compatible}. An \textbf{oriented atlas} on $M$ is an atlas for which all transition map are orientation preserving. $M$ is \textbf{orientable} if it admits an oriented atlas, and \textbf{orientation} of $M$ is an oriented structure.
+
+
+		If $\mathcal{A}_M=\{U_\alpha,h_\alpha\}_\alpha$ and $\mathcal{A}_N=\{V_\beta,g_\beta\}_\beta$ are  oriented atlases on $M$ and $N$ respectively, then a diffeomorphism $f:M\to N$ is said to be \textbf{orientation preserving} if the Jacobians of all maps $g_\beta\circ f\circ h_\alpha^{-1}$ have positive determinant.
+	\end{defn}
+
+	If  $M$ is not closed, and $\mathcal{A}=\{U_\alpha,h_\alpha\}_\alpha$ is an oriented structure on $M$, then it provide also oriented structure on $\partial M$. For if, take $p\in\partial M\cap U_{\alpha_1}\cap U_{\alpha_2}$ and let $h_{\alpha_2}\circ h_{\alpha_1}^{-1}:=(f_1,\cdots,f_n)$,
+	then
+	\[
+		df_{h^{-1}_{\alpha_1}(p)}=J=
+		\begin{bmatrix}
+			J|_{\partial M} &\ast\\
+			0 & \partial f_n/\partial x_n
+		\end{bmatrix}
+	\]
+	since, $\partial M$ has a local coordinates with $x_n=0$, and definitely $\det J,\det J|_{\partial M}>0$, so $\frac{\partial f_n}{\partial x_n}>0$.
+% section basic_definition (end)
+
+
+\section{Partition of Unity} % (fold)
+\label{sec:partition_of_unity}
+	\begin{defn}[Locally Finite]
+		A collection of subsets of $M$ is \textbf{locally finite} if each point of $M$ is contained in some open neighborhood intesecting at most finite number of them.
+	\end{defn}
+
+	\begin{defn}[Relatively Compactness, Locally Compactness, Paracompactness]\quad
+		\begin{enumerate}[label=(\alph*)]
+			\item
+			    A subset $U$ of a space $X$ is \textbf{relatively compact} if closure of $U$ is compact in $X$.
+			\item
+				A space $X$ is said to be \textbf{locally compact} if every open neighborhood of each point admits a relatively compact neighborhood.
+				i.e. For every $x\in X$, and every open neighborhood $U_x$ of $x$, there exists another smaller open neighborhood $V_x$ such that $\overline{V_x}$ is compact and $\overline{V_x}\subseteq U_x$.
+			\item
+				A space $X$ is said to be \textbf{paracompact} if every open covering admits a locally finite refinement.
+				i.e. For every open covering $\mathcal{U}=\{U_\alpha\}_\alpha$ of $X$  there exists open subcovering $\mathcal{V}=\{V_\beta\}_\beta$ that and every $x\in X$, there exists open neighborhood $U$ of $x$ such that $|\{\beta:V_\beta\cap U\neq\varnothing\}|<\infty$.
+		\end{enumerate}
+	\end{defn}
+
+	Locally homeomorphic to $\RR^n$ directly implies following fact.
+	
+	\begin{lem}
+	    Every manifold $M$ is locally compact.
+	\end{lem}
+	    \begin{proof}
+            For each $x\in M$, there exists open neighborhood $U$ of $x$ that homeomorphic to $\RR^n$ by some homeomorphism $h$.
+            Consider a closed ball $\overline{D}$ with centering at $h(x)$ and finite radius.
+            It is obviously compact, and $h$ preserve compactness of $\overline{D}$.
+            Thus $h^{-1}(\overline{D})$ be a compact neighborhood of $x$.
+	    \end{proof}
+    And Following lemma is the key to show every manifold is paracompact.
+	\begin{lem}\label{keylem}
+		If $X$ is locally compact and second countable space,
+		then $X$ can be expressed as the union of at most countably many compact spaces.
+	\end{lem}
+		\begin{proof}
+			We construct countable covering of $X$ by compact subspaces.
+			By second countability, there exists countable base $\beta=\{B_i\}_{i=1}^{\infty}$.
+			By local compactness, each $x\in X$ has a open neighborhood $V_x$ on which $\overline{V_x}$ is compact. 
+			Then for each $x\in X$, there exists $B_{i_x}\in\beta$ such that $x\in B_{i_x}\subseteq V_x$. By assumption $\overline{V_x}$ is compact, $\overline{B_{i_x}}$ is compact. (Since closed set of compact space is also compact.) Note that $\{\overline{B_{i_x}}\}_{x\in X}$ is covering of $X$, but it is at most countable. So there exists at most countable set $J\subseteq X$ such that
+			\[
+				X=\bigcup_{x\in J}\overline{B_{i_x}}.
+			\]
+		\end{proof}
+		
+
+	Conversely, If a space $X$ can be expressed by at most countable many compact subspaces, then it is locally compact.
+    (Since each $x\in X$ is contained in some such compact subspace $C$. Then every open neighborhood $U$ of $x$ admits $V:=U\cap C$, relativity compact.)    
+	\begin{lem}
+		$X$ can be expressed as the union of at most countably many compact subspaces, then $X$ can be also represented as
+		\[
+			X=\bigcup_{i=1}^{\infty}U_i,
+		\]
+		where each $U_i$ is relatively compact, and $\overline{U_i}\subseteq U_{i+1}$ for all $i=1,2,3,\cdots$.
+	
+	\end{lem}
+		\begin{proof}
+			We have $X=\bigcup_{i=1}^{\infty}C_i$, where $C_i$ is compact subspace. By local compactness of $X$
+		\end{proof}
+	\begin{defn}[Adequateness]
+		An atlas $\{U_\alpha,h_\alpha\}_\alpha$ on $M$ is said to be \textbf{adequate} if it is locally finite, $h_\alpha(U_\alpha)=\RR^n$ or $\RR^n_{+}$ for each chart, and $\bigcup_\alpha h^{-1}_\alpha(\mathring{\mathbb{D}^{n}})=M$, where $\mathring{\mathbb{D}^{n}}$ is an interior of unit ball;
+		i.e. $\mathring{\mathbb{D}^{n}}:=\{x\in\RR^n:\Vert x\Vert<1\}$.
+	\end{defn}
+
+	\begin{thm}
+		Let $\mathcal{V}=\{V_\beta\}_\beta$ be an open covering of $M$. Then there exists an adequate atlas $\{U_\alpha,h_\alpha\}_\alpha$ such that $\mathcal{U}=\{U_\alpha\}_\alpha$ is a refinement of $\mathcal{V}$.
+	\end{thm}
+		\begin{proof}
+			Since $M$ is locally compact, Hausdorff and second countable, by \ref{keylem} there exists a sequence $\{K_i\}_{i=1}^\infty$ of open subspaces of $M$, with compact closures and such that $\overline{K_i}\subseteq K_{i+1}$ and $\bigcup_i K_i=M$.
+		\end{proof}
+	\begin{cor}
+		Smoooth manifold is paracompact.
+	\end{cor}
+
+	To define partition of unity, first we construct smooth bump on $\RR^n$. \\
+    
+    Let smooth $f:\RR\to\RR$ is
+	\[
+	    f(x)=\begin{cases}
+	        e^{-1/x^2} &x>0\\ 0 &x\leq 0
+	    \end{cases}.
+	\]
+	And define a smooth $g(x):=f(x-a)f(b-x)$. It is only positive on $(a,b)$ and zero elsewhere. (Where $a<b$.)
+    
+    
+    
+    Then
+    \[
+        h(x)=\frac{\displaystyle\int_{-\infty}^{x}g(t)dt}{\displaystyle\int_{-\infty}^{+\infty}g(t)dt}
+    \]
+    is a smooth function such that $h=0$ for $x<a$ and $h=1$ for $x>b$. And smoothly $0<h<1$ on $(a,b)$. Now $H:=1-h(\Vert x\Vert):\RR^n\to\RR$ is a function that 1 in $\mathbb{D}^n(a)$ and 0 on outside $\mathbb{D}^n(b)$, when $a,b>0$.
+	\begin{defn}[Partition of Unity]
+		Let $\{U_\alpha,h_\alpha\}_\alpha$ be an adequate atlas on $M$. Let $\lambda:\RR^n\to\RR$ be a smooth bump that $\lambda|_{\mathbb{D}^n}=1$ and zero outside of $\mathbb{D}^n(2)$. Let $\lambda_\alpha:M\to\RR$ defined as
+		\[
+			\lambda_\alpha=
+				\begin{cases}
+					\lambda\circ h_\alpha	&\text{inside $U_\alpha$}\\
+					0	&\text{outside $U_\alpha$}
+				\end{cases}
+		\]
+	\end{defn}
+% section partition_of_unity (end)
+
+\newpage
+\begin{appendices}
+\section{Calculus on \texorpdfstring{$\RR^n$}{Rn}} % (fold)
+\label{sec:calculus_on_rn}
+	The main reference of this appendix section is spivak's book
+	\subsection{Differentiation} % (fold)
+	\label{sub:differentiation}\quad
+        
+        
+        \begin{defn}[Differentiablity]
+            A function $f:\RR^n\to\RR^m$ is \textbf{differentiable} at $a\in\RR^n$ if there exists a linear map $\lambda:\RR^n\to\RR^m$ such that
+            \[
+                \lim_{h\to0}\frac{\Vert f(a+h)-f(a)-\lambda(h)\Vert}{\Vert h\Vert}=0.
+            \]
+            The linear map $\lambda$ is denoted $df_a$ and called the \textbf{differential} of $f$ at $a$.
+        \end{defn}
+        \begin{thm}[Uniqueness of Differential]
+            If $f:\RR^n\to\RR^m$ is differentiable at $a\in\RR^n$,
+            then there exists unique linear map $\lambda:\RR^n\to\RR^m$ that $\lambda=df_a$.
+        \end{thm}
+            \begin{proof}
+                Suppose $\lambda_1,\lambda_2:\RR^n\to\RR^m$ are linear and
+                \[
+                    \lim_{h\to0}\frac{\Vert f(a+h)-f(a)-\lambda_1(h)\Vert}{\Vert h\Vert}=0,\quad\lim_{h\to0}\frac{\Vert f(a+h)-f(a)-\lambda_2(h)\Vert}{\Vert h\Vert}=0.
+                \]
+                If $d(h):=f(a+h)-f(a)$, then
+                \begin{align*}
+                    \lim_{h\to0}\frac{\Vert\lambda_1(h)-\lambda_2(h)\Vert}{\Vert h\Vert}&=\lim_{h\to0}\frac{\Vert\lambda_1(h)-d(h)+d(h)-\lambda_2(h)\Vert}{\Vert h\Vert}\\
+                    &\leq\lim_{h\to0}\frac{\Vert d(h)-\lambda_1(h)\Vert}{\Vert h\Vert}+\frac{\Vert d(h)-\lambda_2(h)\Vert}{\Vert h\Vert}\\
+                    &=0
+                \end{align*}
+                Now take an approach $h\to0$ by $tx\to0$ as $t\to0$. Hence for non-zero $x\in\RR^n$, we have
+                \[
+                    0=\lim_{t\to0}\frac{\Vert\lambda_1(tx)-\lambda_2(tx)\Vert}{\Vert tx\Vert}
+                    =\frac{\Vert\lambda_1(x)-\lambda_2(x)\Vert}{\Vert x\Vert}.
+                \]
+                Therefore $\lambda_1(x)=\lambda_2(x)$.
+            \end{proof}
+        adfsasdf $\varphi(x)=$
+	% subsection differentiation (end)
+	\subsection{Integration} % (fold)
+	\label{sub:integration}\quad
+        
+        
+        asdfadsf $I=[a,b]\times[c,d]$
+	% subsection integration (end)
+% section claculus_on_rn (end)
+\section{Vector Bundle Theory} % (fold)
+\label{sec:vector_bundle_theory}
+	The main reference of this appendix section is Milnor and stasheff's book.
+% section vector_bundle_theory (end)
+\end{appendices}
+
+\end{document}

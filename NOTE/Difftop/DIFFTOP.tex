@@ -1,0 +1,199 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[scale=0.85,twoside,bindingoffset=5mm]{geometry}
+\usepackage[onehalfspacing]{setspace}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath, amssymb, amsthm, enumitem, latexsym, mathrsfs, tikz-cd, xcolor, hyperref, kotex}
+\title{Differential Toplogy}
+\author{Trakatus}
+\date{2020 Summer}
+\usepackage{natbib}
+\usepackage{graphicx}
+
+%Mecro
+	%TheoremMecro
+		%Theoremstyles
+			\newtheorem{thm}{Theorem}[section]
+			\newtheorem{lem}[thm]{Lemma}
+			\newtheorem{cor}[thm]{Corollary}
+			\newtheorem{prop}[thm]{Proposition}
+		%Definitonstyles
+			\theoremstyle{definition}
+			\newtheorem{defn}[thm]{Definition}
+			\newtheorem{exer}{Exercise}
+			\newtheorem{exml}{Example}
+			\newtheorem{prob}{Problem}
+			\newtheorem{wrng}{Warning}
+		%Remarkstyles
+			\newtheorem*{claim}{Claim}
+			\newtheorem*{conj}{Conjecture}
+			\newtheorem*{fact}{Fact}
+			\newtheorem*{note}{Note}
+			\newtheorem*{rmk}{Remark}
+			\newtheorem*{rslt}{Result}
+			\newtheorem*{summ}{Summary}
+		%Unordered style
+			\newtheorem*{defn*}{Definition}
+			\newtheorem*{prop*}{Proposition}
+			\newtheorem*{thm*}{Theorem}
+	%CommandMecro
+		%Category macro
+			\newcommand{\cat}[1]{\mathscr{#1}}
+			\newcommand{\dual}{^{\ast}}
+			\newcommand{\obj}{\mathrm{obj}}
+			\newcommand{\op}{^{\mathrm{op}}}
+			\newcommand{\mor}[3]{\hom_{\cat{#1}}(#2,#3)}
+			\newcommand{\Set}{\mathbf{Set}}
+		%Complex part mecro
+			\renewcommand\Re{\mathrm{Re}}
+			\renewcommand\Im{\mathrm{Im}}
+		%Derivative macro
+			\newcommand{\derivative}[2]{\frac{d#1}{d#2}}
+			\newcommand{\pderivative}[2]{\frac{\partial #1}{\partial #2}}
+			\newcommand{\varderivative}[1]{\frac{d}{d#1}}
+			\newcommand{\varpderivative}[1]{\frac{\partial}{\partial #1}}
+		%Blackboard bold macro
+			\newcommand{\Aff}{\mathbb{A}}
+			\newcommand{\affn}{\mathbb{A}^n}
+			\newcommand{\CC}{\mathbb{C}}
+			\newcommand{\Cm}{\mathbb{C}^{m}}
+			\newcommand{\Cn}{\mathbb{C}^{n}}
+			\newcommand{\Eucsp}[2]{\mathbb{#1}^{#2}}
+			\newcommand{\NN}{\mathbb{N}}
+			\newcommand{\pcs}[1]{\mathbb{CP}^{#1}}
+			\newcommand{\pcsn}{\mathbb{CP}^{n}}
+			\newcommand{\prs}[1]{\mathbb{RP}^{#1}}
+			\newcommand{\prsn}{\mathbb{RP}^{n}}
+			\newcommand{\QQ}{\mathbb{Q}}
+			\newcommand{\RR}{\mathbb{R}}
+			\newcommand{\Rm}{\mathbb{R}^{m}}
+			\newcommand{\Rn}{\mathbb{R}^{n}}
+			\newcommand{\ZZ}{\mathbb{Z}}
+		%Index set mecro
+			\newcommand{\indexset}[2]{#1\in\mathcal{#2}}
+		%Limit mecro
+			\newcommand{\limit}[1]{\lim_{#1}}
+			\newcommand{\goinf}{\rightarrow\infty}
+	%Darkmode
+		%\renewcommand\qedsymbol{$\blacksquare$}
+		\newcommand{\setbackgroundcolour}{\pagecolor[rgb]{0.107,0.111,0.137}}
+		\newcommand{\settextcolour}{\color[rgb]{0.77,0.77,0.77}}
+		\newcommand{\invertbackgroundtext}{\setbackgroundcolour\settextcolour}
+		%\invertbackgroundtext
+	%Hyperlink Setting
+		\hypersetup{
+			colorlinks=true,
+			linkcolor=blue,
+			filecolor=magenta,
+			urlcolor=cyan,
+	}	 
+\begin{document}
+
+\maketitle
+\nocite{guillemin2010differential,milnor2016characteristic,milnor1997topology,do2012differential,do2016differential,o2006elementary,helgason2001differential,benedetti2019lectures}
+\section{Manifold and smooth map}
+	미분위상(differential topology) 역시 기하학적 이해이므로 공간과 그 사이의 사상(Map)에 대한 이해를 다룬다.
+\subsection{Euclidean Space}
+	Euclidean space는 Vector space structure로써 기본적인 이해들이 잘 알려져 있다.
+	
+	$\RR^n$은 $n$-겹의 실수들의 집합이다. 만일 거리구조 (Metric structure) $d:\RR^n\times\RR^n\rightarrow\RR$를 (선형대수에서 내적으로도 볼수 있다.) 부여해서 생각한다면 이를 \textbf{euclidean}이라고 한다.
+		\[
+			d(x,y):=\sqrt{\sum^n_{i=1}(x_i-y_i)^2}.
+		\]
+	(표준) 내적구조  $(\ast,\ast)$는 거리구조와 호환가능한 매핑이다.
+		\[
+			(x,y):=\sum^{n}_{i=1}x_iy_i=x^t I y
+		\]
+	이때 정확히 $d^2(x,y)=(x-y,x-y)$. \textbf{norm}은 다음과 같다; $\Vert x\Vert:=\sqrt{(x,x)}$. 또한 내적과 norm을 관련시키는 다음 공식이 있다.
+		\[
+			(x,y)=\Vert x\Vert\Vert y\Vert\cos\theta
+		\]
+	$\theta$는 끼인 각. 특히 이 둘이 수직하다는 것은 $(x.y)=0$임과 동치.
+
+	일반적으로 내적은 Symmetric positive definite matrix $A$로 인해 정의된다.
+		\[
+			(x,y)_A:=x^t A y
+		\]
+
+	Metric stucture는 $\RR^n$을 위상공간(topological space)으로 볼 자연스러운 관점을 제공한다.
+
+	부분집합 $U\subseteq\RR^n$이 \textbf{열려있다 (open})는 말은 모든 $x\in U$에, $r>0$ 이 있어 open $n$-ball of center $x$ and radius $r$;
+		\[
+			B^n(x;r):=\{y\in\RR^n:d(x,y)<r\}
+		\]
+	이 $B^n(x;r)\subseteq U$. 이때 $x=0$ and $r=1$인 경우를 \textbf{unit ball}, $B^n$이라 한다. 비슷하게 다음들을 정의하자: \textbf{unit disk} $D^n$ and \textbf{unit sphere} $S^n$;
+		\[
+			D^n:=\overline{B^n}=\{x\in\RR^n:d(x,0)\leq 1\},\quad S^{n-1}:=\{x\in\RR^n:\Vert x\Vert=1\}
+		\]
+	일반적으로, Vector space의 내적구조가 여럿있다. 비슷하게 다양한 거리구조, 위상구조를 줄 수 있다. e.g. $\RR^n$의 거리구조를 다음처럼 줄 수 있다.
+		\[
+	 		\delta_\alpha(x,y):=\left(\sum^{n}_{i=1}|x_i-y_i|^\alpha\right)^{1/\alpha},\quad \alpha=1,2,\cdots,+\infty.
+		\]
+	위상구조를 그대로 부분집합에 물려줄 수 있다;topological space $(\RR^n,\tau)$의 부분집합 $X$에게,
+		\[
+	 		\tau\cap X:=\{U\cap X:U\in\tau\}.
+		\]
+	라는 위상을 줄수 있고, \textbf{위상 부분공간 (topological subspace})이라 한다.
+
+	두 위상공간 $(X,\tau_X)$과 $(Y,\tau_Y)$사이의 매핑 $f:X\rightarrow Y$이 \textbf{연속 (continuous})이라함은 $Y$의 모든 열린 집합 $U$에 대해, 각각의 preimage $f^{-1}(U)$이 $X$ 위의 열린 집합이다.
+
+	연속함수 $f$가 \textbf{위상동형 (homeomorphism}) 이라는 건 전단사이고, 역함수 역시 연속이라는 뜻.
+
+	그 외에 중요한 위상 성질로는 1. \textbf{컴팩트성 (compactness)}과 2. \textbf{연결성 (connectedness)}이 있다. 왜? 연속함수 공간을 끌고 갈 때 이 성질을 보존하며 대려간다.
+		\begin{enumerate}
+			\item 
+				부분공간 $U(\subseteq X)$이 컴팩트라는 것은 모든 $U$의 open covering이 finite subs 를 갖는다는 것.
+			\item
+				부분공간 $U(\subseteq X)$이 연결됐다라는 것은 Clopen subset이 오직 공집합과 자신만인 것.
+		\end{enumerate}
+
+	\begin{prop}
+		$f:X\rightarrow Y$ 이 연속이라 하자. 그러면
+			\begin{enumerate}
+				\item If $X$이 컴팩트면, $Y$위의 $f(X)$또한 그렇다.
+				\item If $X$이 연결돼있다면, $Y$위의 $f(X)$또한 그렇다.
+			\end{enumerate}
+		\begin{proof}
+			\begin{enumerate}
+				\item
+					$\mathcal{U}=\{U_i\}_{i\in I}$를 $f(X)$ 위의 open covering이라 하자. $f$가 연속이라, 각각의 $i\in I$에 대해 $f^{-1}(U_i)$역시 $X$ 위의 open sets. 그러면
+						\[
+							\bigcup_{i\in I}f^{-1}(U_i)=f^{-1}\left(\bigcup_{i\in I}U_i\right)=f^{-1}(f(X))=X
+						\]
+					즉 $f^{-1}(\mathcal{U}):=\{f^{-1}(U_i)\}_{i\in I}$은  $X$ 위의 open covering. $X$가 컴팩트해서, 적당한 subcovering\\ $\{f^{-1}(U_1),\cdots,f^{-1}(U_r)\}$이 있다. 즉 모든 $x\in X$에,  $i=1,\cdots, r\in I$가 있어 $x\in f^{-1}(U_i)$이게끔, $f(x)\in U_i$이게끔 한다. (물론 $r\in\NN$.) 그래서 모든 $y\in f(X)$가, 적당한 $i=1,\cdots, r\in I$에서 $y\in U_i$. 그리하여 $\{U_1,\cdots,U_r\}$은 $\mathcal{U}$의 finite sub.
+				\item
+					그렇지 않다고 하자. 즉  $X$가 연결되어 있지만, $f(X)$는 $Y$위에서 그렇지 않다고 하자. 그러면 적당한 공집합이 아닌 clopen $V$가 $f(X)$위에 있다. $f$가 연속이므로, $U:=f^{-1}(V)$역시 $X$위의 clopen. $V\neq f(X)$라 하자,  $U\neq X$가 된다. 그러나 $U$는 열결되어 있는 $X$위의 clopen set, 그래서 $U$는 공집합이거나 $X$ 자체. $V$가 공집합이 아니라 $U$역시 공집합이 아니다; 결론: $U$는 clopen이지만 공집합도 $X$ 자체도 아닌 연결된 $X$ 상의 부분집합; 모순이다. 
+			\end{enumerate}
+		\end{proof}
+	\end{prop}
+
+	
+	\begin{rmk}
+		On Hausdorff, 2nd countable, Compact $\iff$ Sequentially compact.\\
+		If given space is locally euclidean, Connectedness $\iff$ Sequentially Path-Connectedness.
+	\end{rmk}	
+\subsection{Differential Calculus}
+	Another fundamental structure on $\RR^n$ is an \emph{differential calculus}. In very intuitive words, linear approximation;\\
+	For open sets $U$ of $\RR^n$ and $V$ of $\RR^m$, consider a map $f:U\rightarrow V$, with standard coordinates $f=(f_1,f_2,\cdots,f_m)$. The map $f:U\rightarrow V$ is said to be \emph{differentiable} at $x\in U$ if there exists an linear map $L:=df_x\in\mathcal{L}(\RR^n;\RR^m)$ that
+	   
+
+\subsection{Smooth Category}
+	
+
+\subsection{Tangent Functor}
+	smooth map을 그의 pushforward, differential로 보내는,
+	smooth manifold를 그의 tangent bundle로 보내는,
+	Functor를 $T$라고 생각할 수 있다.
+
+
+
+
+\subsection{Manifolds}
+\begin{figure}[h]
+\center
+\includegraphics[scale=0.7]{CAPt.PNG}
+\end{figure}
+
+\bibliographystyle{abbrv}
+\bibliography{difftop}
+\end{document}

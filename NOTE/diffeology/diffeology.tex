@@ -1,0 +1,166 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[scale=0.75,twoside,bindingoffset=5mm]{geometry}
+\usepackage[onehalfspacing]{setspace}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[fit]{truncate}
+\usepackage{amsmath, amssymb, amsthm, enumitem, latexsym, mathrsfs, tikz-cd, xcolor, hyperref,array}
+\title{To the Diffeology}
+\author{Trakatus}
+\usepackage[square,sort,comma,numbers]{natbib}
+\usepackage{graphicx}
+%Mecro
+	%TheoremMecro
+		%Theoremstyles
+			\theoremstyle{definition}
+			\newtheorem{thm}{Theorem}[section]
+			\newtheorem{lem}[thm]{Lemma}
+			\newtheorem{cor}[thm]{Corollary}
+			\newtheorem{prop}[thm]{Proposition}
+			\newtheorem{rmk}[thm]{Remark}
+		%Definitonstyles
+			\newtheorem{defn}[thm]{Definition}
+			\newtheorem{exer}{Exercise}
+			\newtheorem{exml}[thm]{Example}
+			\newtheorem{prob}{Problem}
+			\newtheorem{wrng}{Warning}
+		%Remarkstyles
+			\newtheorem*{claim}{Claim}
+			\newtheorem*{conj}{Conjecture}
+			\newtheorem*{fact}{Fact}
+			\newtheorem*{note}{Note}
+			\newtheorem*{rslt}{Result}
+			\newtheorem*{summ}{Summary}
+		%Unordered style
+			\newtheorem*{defn*}{Definition}
+			\newtheorem*{prop*}{Proposition}
+			\newtheorem*{thm*}{Theorem}
+	%CommandMecro
+		%Arrow mecro
+			\newcommand{\injarr}{\rightarrowtail}
+			\newcommand{\surjarr}{\twoheadrightarrow}
+			\newcommand{\bijarr}{\rightarrowtail \hspace{-9pt} \twoheadrightarrow}
+		%Category mecro
+			\newcommand{\cat}[1]{\mathscr{#1}}
+			\newcommand{\dual}{^{\ast}}
+			\newcommand{\obj}{\mathrm{obj}}
+			\newcommand{\op}{^{\mathrm{op}}}
+			\newcommand{\mor}[3]{\hom_{\cat{#1}}(#2,#3)}
+			\newcommand{\Set}{\mathbf{Set}}
+		%Complex part mecro
+			\renewcommand\Re{\mathrm{Re}}
+			\renewcommand\Im{\mathrm{Im}}
+		%Derivative macro
+			\newcommand{\derivative}[2]{\frac{d#1}{d#2}}
+			\newcommand{\pderivative}[2]{\frac{\partial #1}{\partial #2}}
+			\newcommand{\varderivative}[1]{\frac{d}{d#1}}
+			\newcommand{\varpderivative}[1]{\frac{\partial}{\partial #1}}
+		%Blackboard bold macro
+			\newcommand{\Aff}{\mathbb{A}}
+			\newcommand{\affn}{\mathbb{A}^n}
+			\newcommand{\CC}{\mathbb{C}}
+			\newcommand{\Cm}{\mathbb{C}^{m}}
+			\newcommand{\Cn}{\mathbb{C}^{n}}
+			\newcommand{\Eucsp}[2]{\mathbb{#1}^{#2}}
+			\newcommand{\NN}{\mathbb{N}}
+			\newcommand{\pcs}[1]{\mathbb{CP}^{#1}}
+			\newcommand{\pcsn}{\mathbb{CP}^{n}}
+			\newcommand{\prs}[1]{\mathbb{RP}^{#1}}
+			\newcommand{\prsn}{\mathbb{RP}^{n}}
+			\newcommand{\QQ}{\mathbb{Q}}
+			\newcommand{\RR}{\mathbb{R}}
+			\newcommand{\Rm}{\mathbb{R}^{m}}
+			\newcommand{\Rn}{\mathbb{R}^{n}}
+			\newcommand{\ZZ}{\mathbb{Z}}
+		%Index set mecro
+			\newcommand{\indexset}[2]{#1\in\mathcal{#2}}
+		%Limit mecro
+			\newcommand{\limit}[1]{\lim_{#1}}
+			\newcommand{\goinf}{\rightarrow\infty}
+	%Darkmode
+		%\renewcommand\qedsymbol{$\blacksquare$}
+		\newcommand{\setbackgroundcolour}{\pagecolor[rgb]{0.107,0.111,0.137}}
+		\newcommand{\settextcolour}{\color[rgb]{0.77,0.77,0.77}}
+		\newcommand{\invertbackgroundtext}{\setbackgroundcolour\settextcolour}
+		\invertbackgroundtext
+	%Hyperlink Setting
+		\hypersetup{
+			colorlinks=true,
+			linkcolor=blue,
+			filecolor=magenta,
+			urlcolor=cyan,
+	}	 
+\begin{document}
+\maketitle
+	We both using index notation and musical isomorphisms.
+
+	\section{Tensor Analysis}
+	\begin{defn}[Tensor Product]
+		Let $V$ and $W$ are vector space over $\mathbb{F}$. The \textbf{Tensor product} of $V$ and $W$, $V\otimes_{\mathbb{F}}W$ with isomorphic to $V\times W$ by bilinear map
+		\[
+		V\times W\ni(v,w)\mapsto v\otimes_\mathbb{F}w\in V\otimes_{\mathbb{F}}W
+		\]
+		in universal sence. We usually skip writting $\mathbb{F}$ on $\otimes$ when we fix a field or ring.
+	\end{defn}
+	\begin{prop}[Transformation of Basis]
+		Let $v\in V$, a finite dimensional vector over $\mathbb{F}$. Let $\{e_1,\cdots,e_{\dim V}\}$ and $\{\overline{e}_1,\cdots,\overline{e}_{\dim V}\}$ are basis for $V$. Then there uniquely exists $\{a^1,\cdots,a^{\dim V}\}$ and $\{b^1,\cdots,b^{\dim V}\}$ as subset of $\mathbb{F}$ the coefficients that
+		\[
+		v=\sum_{i=1}^{\dim V} a^ie_i=\sum_{i=1}^{\dim V} b^i\overline{e_i}.
+		\]
+		\textbf{Covariant and Contravariant}: Consider a map ${\Lambda}\in\mathrm{Hom}(V;V)$ that ${\Lambda}^{ij}:e_i\mapsto\overline{e}_j$. Then coefficients transform associatively $\overline{\Lambda}_{ij}:a_i\mapsto{b}_j$. Here $\overline{\Lambda}_{ij}{\Lambda}^{ij}=\mathrm{id}$. (Caution: It can multiplying as matrix but it cannot composite as linear map since $\Lambda$ is on $V$ and $\overline{\Lambda}$ is on $V^\ast$.)
+	\end{prop}
+	\begin{note}[Coefficient] Consider $\varphi_v:V\to\mathbb{F}$ that $x\mapsto\langle x,v\rangle$, for inner product $\langle\cdot,\cdot\rangle:V\times V\to\mathbb{F}$. That $\varphi_v\in V^\ast$, that is $\varphi_v=v^\flat$. So coefficients correspond to covector, and conversely coefficient of covector can be corresponded to vector.
+		
+	\end{note}
+	\begin{rmk}[Jacobian]
+		If coordinate transform ${\Lambda}$ is smooth and invertible; $\Lambda\in\mathrm{Diff.Aut}(V)$
+	\end{rmk}
+	\begin{defn}[Multilinear Map]
+		 Let $V$ be a \textbf{vector space over} field $\mathbb{F}$. Let $V^\ast:=\mathrm{Hom}(V;\mathbb{F})$, be a \textbf{dual space} of $V$. Consider $T:\underbrace{V\times\cdots\times V}_{p-\text{copies}}\times\underbrace{V^\ast\times\cdots\times V^\ast}_{q-\text{copies}}\to\mathbb{F}$ is \textbf{multi-linear} if it is linear for each slot. i.e. $T\in\mathrm{Hom}(\underbrace{V\times\cdots\times V}_{p}\times\underbrace{V^\ast\times\cdots\times V^\ast}_{q};\mathbb{F})$, and denote $\mathcal{T}^p_q(V;\mathbb{F})$, called $\binom{p}{q}$-\textbf{Tensor space} over $\mathbb{F}$, and $T$ is called $\binom{p}{q}$-tensor over $\mathbb{F}$.
+	\end{defn}
+
+	\begin{prop}[Basis of Tensor Space]
+		Let $\mathcal{B}=\{e_i\}_{i=1}^{n}$ be a (hamel) \textbf{basis} for $n$-dimensional vector space $V$, and $\mathcal{B}^\ast=\{\varepsilon^i\}_{i=1}^{n}$ is dual basis of $\mathcal{B}$. For $T\in\mathcal{T}^p_q(V)$, consider
+		\[
+		T^{a_1\cdots a_p}_{b_1\cdots b_q}=T(\varepsilon^{a_1},\cdots,\varepsilon^{a_p},e_{b_1},\cdots,e_{b_q})\in\mathbb{F}
+		\]
+		the \textbf{coefficients} of tensor $T$.
+	\end{prop}
+	\begin{defn}[Tensor Fields]
+		Let $M$ be a smooth manifold. 
+	\end{defn}
+	\section{Differential Topology}
+	Immersion Submersion.
+	\section{Categoric Languages}
+
+	\section{Diffeology}
+
+	\begin{thebibliography}{9}
+	\bibitem{Wikipedia}
+	Wikipedia,
+	\texttt{https://www.wikipedia.org/}
+
+
+	\bibitem{nlab}
+	$n$Lab,
+	\texttt{https://ncatlab.org/}
+
+
+	\bibitem{MfPMarsh}
+	Adam Marsh.
+	\textit{Mathematics for Physics, An Illustrated Handbook}
+	World Scientific., 2021
+
+	\bibitem{GPDiffTop}
+	Victor Guilmllemin, and Alan Pollack.
+	\textit{Differential Topology}.
+	Vol. 370. American Mathematical Soc., 2010
+
+
+
+	\bibitem{Diffeology}
+	Patrick Iglesias-Zemmour.
+	\textit{Diffeology}.
+	Vol. 185. American Mathematical Soc., 2013
+	\end{thebibliography}
+\end{document}
